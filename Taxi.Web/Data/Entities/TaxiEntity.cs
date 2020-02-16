@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Taxi.Web.Data.Entities
 {
@@ -10,5 +11,8 @@ namespace Taxi.Web.Data.Entities
         [StringLength(6, MinimumLength = 6, ErrorMessage = "The field {0} must starts with three characters {1} characters.")]
         [Required(ErrorMessage = "The field {0} is mandatory.")]
         public string Plaque { get; set; }
+
+        //relacion lado uno
+        public ICollection<TripEntity> Trips { get; set; }
     }
 }
