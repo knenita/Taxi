@@ -43,7 +43,10 @@ namespace Taxi.Web.Controllers.API
 
             if (taxiEntity == null)
             {
-                return NotFound();
+                //si no se encuentra se crea un nuevo taxi 
+                taxiEntity = new TaxiEntity { Plaque = plaque.ToUpper()};
+                _context.Taxis.Add(taxiEntity);
+                await _context.SaveChangesAsync();
             }
 
             return Ok(_converterHelper.ToTaxiResponse(taxiEntity));
