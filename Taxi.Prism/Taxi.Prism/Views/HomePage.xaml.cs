@@ -1,6 +1,5 @@
 ﻿using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Taxi.Common.Services;
 using Xamarin.Forms;
@@ -18,7 +17,7 @@ namespace Taxi.Prism.Views
             _geolocatorService = geolocatorService;
         }
 
-        protected override void OnAppearing()
+        protected override void OnAppearing()//ejecuta cuando l pag esta lista para mostrarse al usuario
         {
             base.OnAppearing();
             MoveMapToCurrentPositionAsync();
@@ -60,12 +59,12 @@ namespace Taxi.Prism.Views
 
             await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
 
-                permissionLocation = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
-                permissionLocationAlways = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.LocationAlways);
-                permissionLocationWhenInUse = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.LocationWhenInUse);
-                return permissionLocation == PermissionStatus.Granted ||
-                permissionLocationAlways == PermissionStatus.Granted ||
-                permissionLocationWhenInUse == PermissionStatus.Granted;
+            permissionLocation = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+            permissionLocationAlways = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.LocationAlways);
+            permissionLocationWhenInUse = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.LocationWhenInUse);
+            return permissionLocation == PermissionStatus.Granted ||
+            permissionLocationAlways == PermissionStatus.Granted ||
+            permissionLocationWhenInUse == PermissionStatus.Granted;
         }
     }
 }
