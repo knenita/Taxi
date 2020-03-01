@@ -1,7 +1,5 @@
 ﻿using Prism;
 using Prism.Ioc;
-using Taxi.Prism.ViewModels;
-using Taxi.Prism.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -29,7 +27,6 @@ namespace Taxi.Prism
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
         }
     }
 }
