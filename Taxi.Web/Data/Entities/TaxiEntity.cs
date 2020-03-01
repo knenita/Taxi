@@ -14,5 +14,7 @@ namespace Taxi.Web.Data.Entities
 
         //relacion lado uno
         public ICollection<TripEntity> Trips { get; set; }
+        //relacion lado muchos - opcional
+        public UserEntity User { get; set; }
     }
 }

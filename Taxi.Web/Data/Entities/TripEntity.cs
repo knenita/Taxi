@@ -40,6 +40,8 @@ namespace Taxi.Web.Data.Entities
         public TaxiEntity Taxi { get; set; }
         //relacion lado uno
         public ICollection<TripDetailEntity> TripDetails { get; set; }
+        //relacion lado muchos - obligatorio
+        public UserEntity User { get; set; }
 
     }
 }
