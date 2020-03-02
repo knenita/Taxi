@@ -5,6 +5,7 @@ using Plugin.CurrentActivity;
 using Plugin.Permissions;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.SfBusyIndicator.XForms.Droid;
 
 namespace Taxi.Prism.Droid
 {
@@ -20,6 +21,7 @@ namespace Taxi.Prism.Droid
 
             CrossCurrentActivity.Current.Init(this, bundle); // inicializar libreria geolocalizador
             global::Xamarin.Forms.Forms.Init(this, bundle); //inicaliza tema mapas
+            new SfBusyIndicatorRenderer();// inicialiar los botones de syncFusion
             LoadApplication(new App(new AndroidInitializer()));
         }
 
