@@ -10,5 +10,7 @@ namespace Taxi.Common.Services
             string urlBase, //donde se consume dir azure
             string servicePrefix, //api
             string controller); //nombre controlador
+
+        Task<bool> CheckConnectionAsync(string url);
     }
 }

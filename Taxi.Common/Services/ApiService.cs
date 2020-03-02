@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Plugin.Connectivity;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -45,6 +46,16 @@ namespace Taxi.Common.Services
                     Message = ex.Message
                 };
             }
+        }
+
+        public async Task<bool> CheckConnectionAsync(string url)
+        {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                return false;
+            }
+
+            return await CrossConnectivity.Current.IsRemoteReachable(url);
         }
     }
 }
