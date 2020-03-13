@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Taxi.Common.Enumeracion;
 using Taxi.Web.Data.Entities;
 using Taxi.Web.Helpers;
 using Taxi.Web.Models;
@@ -19,17 +20,20 @@ namespace Taxi.Web.Controllers
         private readonly ICombosHelper _combosHelper;
         private readonly IImageHelper _imageHelper;
         private readonly IConfiguration _configuration;
+        private readonly IMailHelper _mailHelper;
 
         public AccountController(
             IUserHelper userHelper,
             ICombosHelper combosHelper,
             IImageHelper imageHelper,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IMailHelper mailHelper)
         {
             _userHelper = userHelper;
             _combosHelper = combosHelper;
             _imageHelper = imageHelper;
             _configuration = configuration;
+            _mailHelper = mailHelper;
         }
 
         public IActionResult Register()
@@ -43,6 +47,50 @@ namespace Taxi.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(AddUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string path = string.Empty;
+
+                if (model.PictureFile != null)
+                {
+                    path = await _imageHelper.UploadImageAsync(model.PictureFile, "Users");
+                }
+
+                UserEntity user = await _userHelper.AddUserAsync(model, path);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "This email is already used.");
+                    model.UserTypes = _combosHelper.GetComboRoles();
+                    return View(model);
+                }
+
+                var myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                var tokenLink = Url.Action("ConfirmEmail", "Account", new
+                {
+                    userid = user.Id,
+                    token = myToken
+                }, protocol: HttpContext.Request.Scheme);
+
+                var response = _mailHelper.SendMail(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
+                    $"To allow the user, " +
+                    $"please click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
+                if (response.IsSuccess)
+                {
+                    ViewBag.Message = "The instructions to allow your user has been sent to email.";
+                    return View(model);
+                }
+
+                ModelState.AddModelError(string.Empty, response.Message);
+            }
+
+            model.UserTypes = _combosHelper.GetComboRoles();
+            return View(model);
+        }
+
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(AddUserViewModel model)
         {
@@ -80,7 +128,7 @@ namespace Taxi.Web.Controllers
 
             model.UserTypes = _combosHelper.GetComboRoles();
             return View(model);
-        }
+        }*/
 
         public IActionResult NotAuthorized()
         {
@@ -236,6 +284,27 @@ namespace Taxi.Web.Controllers
                 }
             }
             return BadRequest();
+        }
+
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            {
+                return NotFound();
+            }
+
+            UserEntity user = await _userHelper.GetUserAsync(new Guid(userId));
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            Microsoft.AspNetCore.Identity.IdentityResult result = await _userHelper.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+            {
+                return NotFound();
+            }
+            return View();
         }
     }
 }
