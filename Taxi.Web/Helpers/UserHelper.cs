@@ -45,7 +45,7 @@ namespace Taxi.Web.Helpers
             }
         }
 
-        public async Task<UserEntity> GetUserByEmailAsync(string email)
+        public async Task<UserEntity> GetUserAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);
         }
@@ -90,7 +90,7 @@ namespace Taxi.Web.Helpers
                 return null;
             }
 
-            UserEntity newUser = await GetUserByEmailAsync(model.Username);
+            UserEntity newUser = await GetUserAsync(model.Username);
             await AddUserToRoleAsync(newUser, userEntity.UserType.ToString());
             return newUser;
         }
@@ -102,6 +102,11 @@ namespace Taxi.Web.Helpers
         public async Task<IdentityResult> UpdateUserAsync(UserEntity user)
         {
             return await _userManager.UpdateAsync(user);
+        }
+
+        public async Task<UserEntity> GetUserAsync(Guid userId)
+        {
+            return await _userManager.FindByIdAsync(userId.ToString());
         }
     }
 }
