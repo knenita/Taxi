@@ -5,6 +5,7 @@
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true"
              prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:i18n="clr-namespace:Taxi.Prism.Helpers"
              x:Class="Taxi.Prism.Views.ReportPage"
              BackgroundColor="{StaticResource ColorBackgroud}"
              Title="{Binding Title}">

@@ -1,4 +1,5 @@
 ﻿using Prism.Navigation;
+using Taxi.Prism.Helpers;
 
 namespace Taxi.Prism.ViewModels
 {
@@ -7,7 +8,8 @@ namespace Taxi.Prism.ViewModels
         public LoginPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Log in";
+            //Title = "Log in";
+            Title = Languages.LogIn;
         }
     }
 }

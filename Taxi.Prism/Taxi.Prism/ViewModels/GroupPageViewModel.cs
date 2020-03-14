@@ -1,4 +1,5 @@
 ﻿using Prism.Navigation;
+using Taxi.Prism.Helpers;
 
 namespace Taxi.Prism.ViewModels
 {
@@ -7,7 +8,7 @@ namespace Taxi.Prism.ViewModels
         public GroupPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Admin my user group";
+            Title = Languages.AdminMyUserGroup;
         }
     }
 }
