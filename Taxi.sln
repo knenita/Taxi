@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taxi.Cross.Android", "Taxi.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taxi.Cross.iOS", "Taxi.Cross.iOS\Taxi.Cross.iOS.csproj", "{14356095-0BAD-46D7-94C4-D30E028686EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taxi.Web", "Taxi.Web\Taxi.Web.csproj", "{E311736B-F0E6-475F-839D-884E591ED866}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taxi.Web", "Taxi.Web\Taxi.Web.csproj", "{E311736B-F0E6-475F-839D-884E591ED866}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -224,6 +224,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_NeutralResourcesLanguage = en-US
 		SolutionGuid = {A25DBDD2-5EA5-4FBC-99AE-7EB7B971A11D}
 	EndGlobalSection
 EndGlobal
